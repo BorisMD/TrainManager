@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<section class="py-5">
+    <div class="container">
+        <h1>Bulgarian State Railways</h1>
+        <div>
+            <a href="/Line/GetAll?page=1" class="btn btn-primary text-center mb-2">View All Lines</a>
+
+        </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div>
+                <a href="/User/All?page=1&showBy=10&orderBy=usernameAsc" class="btn btn-primary text-center mb-2">View All Users</a>
+            </div>
+
+        }
+
+        @if (User.IsInRole("Admin") || User.IsInRole("User"))
+        {
+            <div>
+                <a href="/Train/All?page=1" class="btn btn-primary text-center mb-2">View All Trains</a>
+            </div>
+        }
+    </div>
+</section>
+
+<a>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+    Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. 
+    Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. 
+    Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</a>

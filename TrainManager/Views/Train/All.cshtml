@@ -1,0 +1,63 @@
+﻿@using TrainManager.Models
+@model TrainManager.ViewModels.Train.ListingPageViewModel
+<section class="py-5">
+    <div class="container">
+        <h1 style="margin: 2%; text-align: center;">All Trains</h1>
+        <div style="padding: 5%;">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Capacity</th>
+                        <th scope="col">Fast</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Trains.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@Model.Trains[i].Id</th>
+                            <td>@Model.Trains[i].Name</td>
+                            <td>@Model.Trains[i].Capacity</td>
+                            <td>@Model.Trains[i].Fast</td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="pagination mx-auto">
+                    @{
+                        var prevPage = Model.CurrentPage - 1;
+                        var nextPage = Model.CurrentPage + 1;
+                    }
+                    @if (Model.CurrentPage != 1)
+                    {
+                        <a href="/Train/All?page=@prevPage" class="btn btn-primary prev-arrow mx-1"><i class="fas fa-arrow-left"></i></a>
+                    }
+
+                    @for (var j = 1; j <= (Model.TotalTrainsCount / GlobalConstants.TrainsPerPage) + 1; j++)
+                    {
+                        @if (j == Model.CurrentPage)
+                        {
+                            <a class="btn btn-primary active mx-1" href="/Train/All?page=@j">@j</a>
+                        }
+                        else if (j >= Model.CurrentPage - 4 && (j <= Model.CurrentPage + 4 && j <= Model.LastPage))
+                        {
+                            <a href="/Train/All?page=@j" class="btn mx-1">@j</a>
+                        }
+                    }
+
+                    @if (Model.CurrentPage != Model.LastPage)
+                    {
+                        <a href="/Train/All?page=@nextPage" class="btn btn-primary next-arrow mx-1"><i class="fas fa-arrow-right"></i></a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

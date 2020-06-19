@@ -1,0 +1,69 @@
+﻿@using TrainManager.Models
+@model TrainManager.ViewModels.Line.ListingPageViewModel
+<section class="py-5">
+    <div class="container">
+        <h1 style="margin: 2%; text-align: center;">All Lines</h1>
+        <div style="padding: 5%;">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">From</th>
+                        <th scope="col">To</th>
+                        <th scope="col">Departure Time</th>
+                        <th scope="col">Arrival Time</th>
+                        <th scope="col">Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (var i = 0; i < Model.Lines.Count; i++)
+                    {
+                        <tr>
+                            <th scope="row">@Model.Lines[i].From</th>
+                            <td>@Model.Lines[i].To</td>
+                            <td>@Model.Lines[i].DepartureTime</td>
+                            <td>@Model.Lines[i].ArrivalTime</td>
+                            <td>@Model.Lines[i].Date</td>
+                            <td>
+                                <div class="button-holder">
+                                    <a href="/Line/Details?id=@Model.Lines[i].Id" class="btn btn-info text-uppercase">Info</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+            <div class="d-flex flex-wrap align-items-center">
+                <div class="pagination mx-auto">
+                    @{
+                        var prevPage = Model.CurrentPage - 1;
+                        var nextPage = Model.CurrentPage + 1;
+                    }
+                    @if (Model.CurrentPage != 1)
+                    {
+                        <a href="/Line/GetAll?page=@prevPage" class="btn btn-primary prev-arrow mx-1"><i class="fas fa-arrow-left"></i></a>
+                    }
+
+                    @for (var j = 1; j <= (Model.TotalLinesCount / GlobalConstants.LinesPerPage) + 1; j++)
+                    {
+                        @if (j == Model.CurrentPage)
+                        {
+                            <a class="btn btn-primary active mx-1" href="/Line/GetAll?page=@j">@j</a>
+                        }
+                        else if (j >= Model.CurrentPage - 4 && (j <= Model.CurrentPage + 4 && j <= Model.LastPage))
+                        {
+                            <a href="/Line/GetAll?page=@j" class="btn mx-1">@j</a>
+                        }
+                    }
+
+                    @if (Model.CurrentPage != Model.LastPage)
+                    {
+                        <a href="/Line/GetAll?page=@nextPage" class="btn btn-primary next-arrow mx-1"><i class="fas fa-arrow-right"></i></a>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
